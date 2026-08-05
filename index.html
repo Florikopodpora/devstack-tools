@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DevStack Tools - Free Developer Utilities Online</title>
+  <meta name="description" content="Free developer tools: JSON to TypeScript, CSS generator, color converter, Base64 encoder, Lorem Ipsum, UUID generator, and more. No signup needed.">
+  <meta name="keywords" content="developer tools, JSON to TypeScript, CSS generator, free online tools, web developer utilities">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0e17;
+      --surface: #111827;
+      --surface-2: #1e293b;
+      --border: rgba(255,255,255,0.08);
+      --border-hover: rgba(255,255,255,0.15);
+      --text: #f1f5f9;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --accent: #10b981;
+      --accent-2: #06b6d4;
+      --purple: #8b5cf6;
+      --pink: #ec4899;
+      --amber: #f59e0b;
+      --radius: 12px;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', -apple-system, sans-serif;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* Header */
+    .header {
+      background: rgba(17, 24, 39, 0.8);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .logo { font-weight: 900; font-size: 1.3rem; color: var(--accent); }
+    .logo span { color: var(--text); }
+    .header-links { display: flex; gap: 16px; align-items: center; }
+    .header-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .header-links a:hover { color: var(--text); }
+    .pro-link {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #fff !important;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-weight: 700 !important;
+    }
+
+    /* Hero */
+    .hero {
+      text-align: center;
+      padding: 60px 20px 40px;
+      background: radial-gradient(ellipse at 50% 0%, rgba(16,185,129,0.08) 0%, transparent 60%);
+    }
+    .hero h1 {
+      font-size: 2.8rem;
+      font-weight: 900;
+      letter-spacing: -1px;
+      margin-bottom: 12px;
+    }
+    .hero h1 .gradient {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero p { color: var(--text-muted); font-size: 1.1rem; max-width: 600px; margin: 0 auto; }
+
+    /* Main Layout */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 20px 60px; }
+
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+      gap: 20px;
+      margin-top: 32px;
+    }
+
+    /* Tool Cards */
+    .tool-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    .tool-card:hover {
+      border-color: var(--border-hover);
+      box-shadow: 0 0 30px rgba(16,185,129,0.06);
+    }
+    .tool-header {
+      padding: 20px 20px 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .tool-header h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .tool-tag {
+      font-size: 0.7rem;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .tag-free { background: rgba(16,185,129,0.15); color: var(--accent); }
+    .tool-body { padding: 0 20px 20px; }
+
+    textarea, input[type="text"], input[type="number"] {
+      width: 100%;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: #38bdf8;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      padding: 12px;
+      border-radius: 8px;
+      resize: vertical;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    textarea:focus, input:focus {
+      border-color: var(--accent);
+    }
+    textarea { height: 110px; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s;
+      margin-top: 10px;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), #059669);
+      color: #fff;
+    }
+    .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(16,185,129,0.3); }
+    .btn-secondary {
+      background: var(--surface-2);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-secondary:hover { border-color: var(--accent); }
+
+    .output-area {
+      margin-top: 10px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--accent);
+      min-height: 60px;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+
+    .btn-row { display: flex; gap: 8px; flex-wrap: wrap; }
+
+    /* Affiliate Section */
+    .affiliate-section {
+      margin-top: 48px;
+      padding: 32px;
+      background: linear-gradient(135deg, rgba(16,185,129,0.06), rgba(139,92,246,0.06));
+      border: 1px solid rgba(16,185,129,0.2);
+      border-radius: var(--radius);
+      text-align: center;
+    }
+    .affiliate-section h2 { font-size: 1.4rem; margin-bottom: 8px; }
+    .affiliate-section p { color: var(--text-muted); margin-bottom: 20px; }
+    .affiliate-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-top: 20px;
+    }
+    .aff-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+      text-align: left;
+    }
+    .aff-card h4 { font-size: 0.95rem; margin-bottom: 6px; }
+    .aff-card p { font-size: 0.82rem; color: var(--text-dim); }
+    .aff-card a {
+      display: inline-block;
+      margin-top: 10px;
+      color: var(--accent);
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 0.85rem;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 24px;
+      color: var(--text-dim);
+      font-size: 0.8rem;
+      border-top: 1px solid var(--border);
+    }
+    .footer a { color: var(--text-muted); text-decoration: none; }
+
+    @media (max-width: 768px) {
+      .tools-grid { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 1.8rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="logo">Dev<span>Stack</span> Tools</div>
+    <div class="header-links">
+      <a href="#tools">Free Tools</a>
+      <a href="#resources">Resources</a>
+      <a href="https://senkyrdenis.gumroad.com" target="_blank" class="pro-link">Get Starter Kit →</a>
+    </div>
+  </div>
+
+  <div class="hero">
+    <h1>Free <span class="gradient">Developer Utilities</span></h1>
+    <p>Instant browser-based tools for developers. No login, no tracking, no BS. Just paste and go.</p>
+  </div>
+
+  <div class="container">
+    <div id="tools" class="tools-grid">
+
+      <!-- Tool 1: JSON to TypeScript -->
+      <div class="tool-card">
+        <div class="tool-header">
+          <h3>🔄 JSON → TypeScript</h3>
+          <span class="tool-tag tag-free">FREE</span>
+        </div>
+        <div class="tool-body">
+          <textarea id="json-input" placeholder='Paste JSON here...'>{ "id": 1, "name": "Denis", "active": true, "score": 99.5 }</textarea>
+          <div class="btn-row">
+            <button class="btn btn-primary" onclick="jsonToTS()">Convert →</button>
+            <button class="btn btn-secondary" onclick="copyOutput('ts-out')">Copy</button>
+          </div>
+          <div class="output-area" id="ts-out">// Output appears here</div>
+        </div>
+      </div>
+
+      <!-- Tool 2: Base64 Encoder/Decoder -->
+      <div class="tool-card">
+        <div class="tool-header">
+          <h3>🔐 Base64 Encode / Decode</h3>
+          <span class="tool-tag tag-free">FREE</span>
+        </div>
+        <div class="tool-body">
+          <textarea id="b64-input" placeholder="Enter text to encode or Base64 to decode...">Hello, World!</textarea>
+          <div class="btn-row">
+            <button class="btn btn-primary" onclick="b64Encode()">Encode</button>
+            <button class="btn btn-primary" onclick="b64Decode()">Decode</button>
+            <button class="btn btn-secondary" onclick="copyOutput('b64-out')">Copy</button>
+          </div>
+          <div class="output-area" id="b64-out">// Output appears here</div>
+        </div>
+      </div>
+
+      <!-- Tool 3: UUID Generator -->
+      <div class="tool-card">
+        <div class="tool-header">
+          <h3>🆔 UUID v4 Generator</h3>
+          <span class="tool-tag tag-free">FREE</span>
+        </div>
+        <div class="tool-body">
+          <p style="color:var(--text-muted); font-size:0.85rem; margin-bottom:12px;">Generate cryptographically random UUIDs.</p>
+          <div class="btn-row">
+            <button class="btn btn-primary" onclick="genUUID(1)">Generate 1</button>
+            <button class="btn btn-primary" onclick="genUUID(5)">Generate 5</button>
+            <button class="btn btn-primary" onclick="genUUID(10)">Generate 10</button>
+            <button class="btn btn-secondary" onclick="copyOutput('uuid-out')">Copy</button>
+          </div>
+          <div class="output-area" id="uuid-out">// Click to generate</div>
+        </div>
+      </div>
+
+      <!-- Tool 4: Color Converter -->
+      <div class="tool-card">
+        <div class="tool-header">
+          <h3>🎨 HEX ↔ RGB ↔ HSL</h3>
+          <span class="tool-tag tag-free">FREE</span>
+        </div>
+        <div class="tool-body">
+          <input type="text" id="color-input" placeholder="#10b981 or rgb(16,185,129)" value="#10b981">
+          <div class="btn-row">
+            <button class="btn btn-primary" onclick="convertColor()">Convert</button>
+            <button class="btn btn-secondary" onclick="copyOutput('color-out')">Copy</button>
+          </div>
+          <div class="output-area" id="color-out">// Output appears here</div>
+        </div>
+      </div>
+
+      <!-- Tool 5: Lorem Ipsum Generator -->
+      <div class="tool-card">
+        <div class="tool-header">
+          <h3>📝 Lorem Ipsum Generator</h3>
+          <span class="tool-tag tag-free">FREE</span>
+        </div>
+        <div class="tool-body">
+          <label style="color:var(--text-muted); font-size:0.85rem;">Number of paragraphs:</label>
+          <input type="number" id="lorem-count" value="3" min="1" max="20" style="width:80px; margin-top:6px;">
+          <div class="btn-row">
+            <button class="btn btn-primary" onclick="genLorem()">Generate</button>
+            <button class="btn btn-secondary" onclick="copyOutput('lorem-out')">Copy</button>
+          </div>
+          <div class="output-area" id="lorem-out" style="max-height:180px; overflow-y:auto;">// Click Generate</div>
+        </div>
+      </div>
+
+      <!-- Tool 6: CSS Glassmorphism -->
+      <div class="tool-card">
+        <div class="tool-header">
+          <h3>💎 CSS Glassmorphism</h3>
+          <span class="tool-tag tag-free">FREE</span>
+        </div>
+        <div class="tool-body">
+          <label style="color:var(--text-muted); font-size:0.85rem;">Blur (px):</label>
+          <input type="number" id="glass-blur" value="12" min="1" max="40" style="width:80px; margin-top:6px;">
+          <label style="color:var(--text-muted); font-size:0.85rem; margin-top:8px; display:block;">Opacity (0-1):</label>
+          <input type="number" id="glass-opacity" value="0.05" min="0" max="1" step="0.05" style="width:80px; margin-top:6px;">
+          <div class="btn-row">
+            <button class="btn btn-primary" onclick="genGlass()">Generate CSS</button>
+            <button class="btn btn-secondary" onclick="copyOutput('glass-out')">Copy</button>
+          </div>
+          <div class="output-area" id="glass-out">// Click Generate CSS</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Recommended Developer Tools (Affiliate Links) -->
+    <div id="resources" class="affiliate-section">
+      <h2>🛠 Recommended Developer Resources</h2>
+      <p>Tools and gear we personally use and recommend for productive development.</p>
+      <div class="affiliate-grid">
+        <div class="aff-card">
+          <h4>⌨️ Keychron Q1 Pro</h4>
+          <p>The best mechanical keyboard for developers who code 8+ hours daily.</p>
+          <a href="https://www.amazon.com/dp/B0BZDQ1234?tag=techdesk006-20" target="_blank">View on Amazon →</a>
+        </div>
+        <div class="aff-card">
+          <h4>🖥 Dell 40" 5K Ultrawide</h4>
+          <p>Massive screen real estate for multi-pane coding setups.</p>
+          <a href="https://www.amazon.com/s?k=dell+ultrawide+5k+monitor&tag=techdesk006-20" target="_blank">View on Amazon →</a>
+        </div>
+        <div class="aff-card">
+          <h4>🪑 Herman Miller Embody</h4>
+          <p>Premium ergonomic chair built for long engineering sessions.</p>
+          <a href="https://www.amazon.com/s?k=herman+miller+embody&tag=techdesk006-20" target="_blank">View on Amazon →</a>
+        </div>
+        <div class="aff-card">
+          <h4>📚 Clean Code by Robert Martin</h4>
+          <p>Essential software engineering principles for writing maintainable code.</p>
+          <a href="https://www.amazon.com/s?k=clean+code+robert+martin&tag=techdesk006-20" target="_blank">View on Amazon →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>DevStack Tools &copy; 2026 &middot; Built by <a href="https://senkyrdenis.gumroad.com">Denis Šenkýř</a> &middot; As an Amazon Associate we earn from qualifying purchases.</p>
+  </div>
+
+  <script>
+    // JSON to TypeScript
+    function jsonToTS() {
+      try {
+        const obj = JSON.parse(document.getElementById('json-input').value);
+        let lines = ['export interface Root {'];
+        for (const [key, val] of Object.entries(obj)) {
+          let t = typeof val;
+          if (val === null) t = 'null';
+          else if (Array.isArray(val)) t = 'any[]';
+          else if (t === 'object') t = 'Record<string, unknown>';
+          lines.push(`  ${key}: ${t};`);
+        }
+        lines.push('}');
+        document.getElementById('ts-out').textContent = lines.join('\n');
+      } catch(e) {
+        document.getElementById('ts-out').textContent = '// Error: Invalid JSON\n// ' + e.message;
+      }
+    }
+
+    // Base64
+    function b64Encode() {
+      const v = document.getElementById('b64-input').value;
+      document.getElementById('b64-out').textContent = btoa(unescape(encodeURIComponent(v)));
+    }
+    function b64Decode() {
+      try {
+        const v = document.getElementById('b64-input').value;
+        document.getElementById('b64-out').textContent = decodeURIComponent(escape(atob(v)));
+      } catch(e) {
+        document.getElementById('b64-out').textContent = '// Error: Invalid Base64 string';
+      }
+    }
+
+    // UUID v4
+    function genUUID(count) {
+      const uuids = [];
+      for (let i = 0; i < count; i++) {
+        uuids.push(crypto.randomUUID());
+      }
+      document.getElementById('uuid-out').textContent = uuids.join('\n');
+    }
+
+    // Color converter
+    function convertColor() {
+      const v = document.getElementById('color-input').value.trim();
+      let r, g, b;
+      if (v.startsWith('#')) {
+        const hex = v.replace('#', '');
+        r = parseInt(hex.substr(0,2), 16);
+        g = parseInt(hex.substr(2,2), 16);
+        b = parseInt(hex.substr(4,2), 16);
+      } else {
+        const m = v.match(/(\d+)/g);
+        if (m && m.length >= 3) { r = +m[0]; g = +m[1]; b = +m[2]; }
+        else { document.getElementById('color-out').textContent = '// Invalid format'; return; }
+      }
+      const hex = `#${r.toString(16).padStart(2,'0')}${g.toString(16).padStart(2,'0')}${b.toString(16).padStart(2,'0')}`;
+      const max = Math.max(r,g,b)/255, min = Math.min(r,g,b)/255;
+      const l = (max+min)/2;
+      let s = 0, h = 0;
+      if (max !== min) {
+        const d = max - min;
+        s = l > 0.5 ? d/(2-max-min) : d/(max+min);
+        const rn=r/255, gn=g/255, bn=b/255;
+        if (rn === max) h = ((gn-bn)/d + (gn<bn?6:0))/6;
+        else if (gn === max) h = ((bn-rn)/d + 2)/6;
+        else h = ((rn-gn)/d + 4)/6;
+      }
+      const out = `HEX: ${hex}\nRGB: rgb(${r}, ${g}, ${b})\nHSL: hsl(${Math.round(h*360)}, ${Math.round(s*100)}%, ${Math.round(l*100)}%)`;
+      document.getElementById('color-out').textContent = out;
+    }
+
+    // Lorem Ipsum
+    function genLorem() {
+      const paras = [
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        "Curabitur pretium tincidunt lacus. Nulla gravida orci a odio. Nullam varius, turpis et commodo pharetra, est eros bibendum elit, nec luctus magna felis sollicitudin mauris.",
+        "Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus.",
+        "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante."
+      ];
+      const n = Math.min(parseInt(document.getElementById('lorem-count').value) || 3, 20);
+      let out = [];
+      for (let i = 0; i < n; i++) out.push(paras[i % paras.length]);
+      document.getElementById('lorem-out').textContent = out.join('\n\n');
+    }
+
+    // Glassmorphism
+    function genGlass() {
+      const blur = document.getElementById('glass-blur').value || 12;
+      const opacity = document.getElementById('glass-opacity').value || 0.05;
+      const css = `background: rgba(255, 255, 255, ${opacity});
+backdrop-filter: blur(${blur}px);
+-webkit-backdrop-filter: blur(${blur}px);
+border: 1px solid rgba(255, 255, 255, 0.1);
+border-radius: 16px;
+box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);`;
+      document.getElementById('glass-out').textContent = css;
+    }
+
+    // Copy helper
+    function copyOutput(id) {
+      const text = document.getElementById(id).textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        const el = event.target;
+        const orig = el.textContent;
+        el.textContent = '✓ Copied!';
+        setTimeout(() => el.textContent = orig, 1500);
+      });
+    }
+  </script>
+</body>
+</html>
